@@ -48,38 +48,44 @@ const float scaleMD = 2.0; // (steps/mm)
 /* POWER SOURCE PINOUT
 PC PSU triggered to ON when pin goes LOW
 */
-const int PIN_PSU_POWER = 0;
+const int PIN_PSU_POWER = 12;  //PS_ON_PIN   For RAMPS 1.4
 
 /*
  * WIRE
  */
-const int PIN_WIRE = 0;
+const int PIN_WIRE = 10;  // EXTRUDER 1 For RAMPS 1.4
 int wire_temp = 0;
 
 /* STEPPER PINOUT
 MA -> Upper stepper side A
 MB -> Lower stepper side A
 */
-const int PIN_MA_STEP = 0;
-const int PIN_MB_STEP = 0;
-const int PIN_MC_STEP = 0;
-const int PIN_MD_STEP = 0;
-const int PIN_MA_DIR = 0;
-const int PIN_MB_DIR = 0;
-const int PIN_MC_DIR = 0;
-const int PIN_MD_DIR = 0;
+const int PIN_MA_STEP = 54;  //X_STEP_PIN For RAMPS 1.4
+const int PIN_MA_DIR = 55;  // X_DIR_PIN For RAMPS 1.4
+
+const int PIN_MB_STEP = 60;  // Y_STEP_PIN For RAMPS 1.4
+const int PIN_MB_DIR = 61;   // Y_DIR_PIN For RAMPS 1.4
+
+const int PIN_MC_STEP = 46;  // Z_STEP_PIN For RAMPS 1.4
+const int PIN_MC_DIR = 48;   // Z_DIR_PIN For RAMPS 1.4
+
+const int PIN_MD_STEP = 26;  // E0_STEP_PIN For RAMPS 1.4
+const int PIN_MD_DIR = 28;   // E0_DIR_PIN For RAMPS 1.4
 
 /* LIMIT SWITCH PINOUT 
 m/M -> min/max
 A/B -> side A or B*/
-const int PIN_LSW_MXA = 0;
-const int PIN_LSW_MYA = 0;
-const int PIN_LSW_mXA = 0;
-const int PIN_LSW_mYA = 0;
-const int PIN_LSW_MXB = 0;
-const int PIN_LSW_MYB = 0;
-const int PIN_LSW_mXB = 0;
-const int PIN_LSW_mYB = 0;
+const int PIN_LSW_MXA = 3;
+const int PIN_LSW_mXA = 2;
+
+const int PIN_LSW_MYA = 14;
+const int PIN_LSW_mYA = 15;
+
+const int PIN_LSW_MXB = 18;
+const int PIN_LSW_mXB = 19;
+
+const int PIN_LSW_MYB = 20;
+const int PIN_LSW_mYB = 21;
 
 // PINOUT END ------------------------------------------------------- PINOUT END
 
