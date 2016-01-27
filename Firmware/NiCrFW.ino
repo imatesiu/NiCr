@@ -228,6 +228,20 @@ void PathABCD( int Adx, int Ady, int Bdx, int Bdy )
 void setup()
 {
   Serial.begin(115200);
+  pinMode(PIN_MA_ENB,OUTPUT); 
+  pinMode(PIN_MB_ENB,OUTPUT); 
+  pinMode(PIN_MC_ENB,OUTPUT); 
+  pinMode(PIN_MD_ENB,OUTPUT); 
+  
+   pinMode(PIN_MA_STEP,OUTPUT); 
+  pinMode(PIN_MB_STEP,OUTPUT); 
+  pinMode(PIN_MC_STEP,OUTPUT); 
+  pinMode(PIN_MD_STEP,OUTPUT); 
+  
+  pinMode(PIN_MA_DIR,OUTPUT); 
+  pinMode(PIN_MB_DIR,OUTPUT); 
+  pinMode(PIN_MC_DIR,OUTPUT); 
+  pinMode(PIN_MD_DIR,OUTPUT); 
 }
 
 String complete_instruction[6];  // contains the decoded instruction
