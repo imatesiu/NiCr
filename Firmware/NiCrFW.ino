@@ -62,15 +62,20 @@ MB -> Lower stepper side A
 */
 const int PIN_MA_STEP = 54;  //X_STEP_PIN For RAMPS 1.4
 const int PIN_MA_DIR = 55;  // X_DIR_PIN For RAMPS 1.4
+const int PIN_MA_ENB = 38; 
 
 const int PIN_MB_STEP = 60;  // Y_STEP_PIN For RAMPS 1.4
 const int PIN_MB_DIR = 61;   // Y_DIR_PIN For RAMPS 1.4
+const int PIN_MB_ENB = 56;
 
 const int PIN_MC_STEP = 46;  // Z_STEP_PIN For RAMPS 1.4
 const int PIN_MC_DIR = 48;   // Z_DIR_PIN For RAMPS 1.4
+const int PIN_MC_ENB = 62;
+
 
 const int PIN_MD_STEP = 26;  // E0_STEP_PIN For RAMPS 1.4
 const int PIN_MD_DIR = 28;   // E0_DIR_PIN For RAMPS 1.4
+const int PIN_MD_ENB = 24;
 
 /* LIMIT SWITCH PINOUT 
 m/M -> min/max
@@ -128,6 +133,11 @@ void MoveStepper()
   // workplane B
   MC_steps = bx + by;
   MD_steps = bx - by;
+  // Enable:
+  digitalWrite( PIN_MA_ENB, LOW );
+  digitalWrite( PIN_MB_ENB, LOW );
+  digitalWrite( PIN_MC_ENB, LOW );
+  digitalWrite( PIN_MD_ENB, LOW );
   // rotation direction:
   digitalWrite( PIN_MA_DIR, LOW );
   digitalWrite( PIN_MB_DIR, LOW );
