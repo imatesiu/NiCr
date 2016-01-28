@@ -228,6 +228,8 @@ void PathABCD( int Adx, int Ady, int Bdx, int Bdy )
 void setup()
 {
   Serial.begin(115200);
+  pinMode(PIN_PSU_POWER, OUTPUT); 
+  
   pinMode(PIN_MA_ENB,OUTPUT); 
   pinMode(PIN_MB_ENB,OUTPUT); 
   pinMode(PIN_MC_ENB,OUTPUT); 
