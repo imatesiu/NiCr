@@ -7,13 +7,16 @@
 // defines pins numbers
 const int stepPin = 54; 
 const int dirPin = 55; 
+const int PIN_PSU_POWER = 12;
  
 void setup() {
   // Sets the two pins as Outputs
   pinMode(stepPin,OUTPUT); 
   pinMode(dirPin,OUTPUT);
+  pinMode(PIN_PSU_POWER, OUTPUT ); 
 }
 void loop() {
+  digitalWrite( PIN_PSU_POWER, LOW ); 
   digitalWrite(dirPin,HIGH); // Enables the motor to move in a particular direction
   // Makes 200 pulses for making one full cycle rotation
   for(int x = 0; x < 200; x++) {
