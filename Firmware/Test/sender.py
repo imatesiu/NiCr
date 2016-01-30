@@ -19,7 +19,7 @@ with open(fname) as f:
 	
 x=0
 for content in contents:
-	if(content>3):
+	if(len(content)>3):
 		command = content[:len(content)-1]
 	else:
 		command = content

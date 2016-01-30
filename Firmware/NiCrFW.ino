@@ -270,7 +270,7 @@ void loop()
     digitalWrite(LED_PIN, LOW);
   while(!Serial.available()) { }  // if there is nothing on serial, do nothing
   int  i = 0;
-  char raw_instruction[25];
+  char raw_instruction[37];
   if(Serial.available())
   {  // if something comes from serial, read it and store it in raw_instruction char array
     delay(10); // delay to allow buffer to fill
@@ -283,12 +283,12 @@ void loop()
   if( strlen( raw_instruction ) > 0 )  // if a new raw_instruction has been read
   {
     // clean raw_instruction before decoding (overwrite non filled array positions with empty spaces)
-    for( int n = i; n < 25; n++ ) { raw_instruction[n] = ' '; }
+    for( int n = i; n < 37; n++ ) { raw_instruction[n] = ' '; }
     // decode the instruction (4 fields) (iterator n = field, iterator j = character)
     int j = 0;
     for( int n = 0; n < 5; n++ )
     { 
-      while( j < 25 )
+      while( j < 37 )
       {
         if( raw_instruction[j] == ' ' )
         {
@@ -337,6 +337,8 @@ void loop()
       }
       if( complete_instruction[0] == "MOVE" )
       {
+        Serial.println("Modve3:"+complete_instruction[3]);
+		    Serial.println("move4"+complete_instruction[4]);
         int stepsMA = round( complete_instruction[1].toFloat()*scaleMA );
         int stepsMB = round( complete_instruction[2].toFloat()*scaleMB );
         int stepsMC = round( complete_instruction[3].toFloat()*scaleMC );

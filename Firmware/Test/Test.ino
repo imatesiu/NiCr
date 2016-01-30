@@ -30,6 +30,8 @@ if (millis() %1000 <500)
   else
     digitalWrite(LED_PIN, LOW);
     
+int rawtemp = analogRead(PIN_TEMP);
+    Serial.println( "RAW:" +String(rawtemp));
   digitalWrite( PIN_PSU_POWER, LOW );
   digitalWrite( enaPin, LOW );
   digitalWrite(dirPin,true); // Enables the motor to move in a particular direction
