@@ -337,8 +337,6 @@ void loop()
       }
       if( complete_instruction[0] == "MOVE" )
       {
-        Serial.println("Modve3:"+complete_instruction[3]);
-		    Serial.println("move4"+complete_instruction[4]);
         int stepsMA = round( complete_instruction[1].toFloat()*scaleMA );
         int stepsMB = round( complete_instruction[2].toFloat()*scaleMB );
         int stepsMC = round( complete_instruction[3].toFloat()*scaleMC );
