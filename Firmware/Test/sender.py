@@ -20,6 +20,10 @@ with open(fname) as f:
 x=0
 for content in contents:
 	command = content[:len(content)-1]
+	if len(command)>0:
+		if(command[0:1]=="\\"): continue;
+	x+=1
+	if(x<8): continue;
 	print command
 	ser.write(str(command))
 	reply = ser.readline()
@@ -29,10 +33,9 @@ for content in contents:
 			reply = ser.readline()
 			print reply
 			sleep(.1)
-			if x==0:
+			if x==8:
 				break
 	if x==-1:
 		exit(0)
-	x+=1
 	
 ser.close()

@@ -244,7 +244,7 @@ void setup()
   pinMode(PIN_MC_ENB,OUTPUT); 
   pinMode(PIN_MD_ENB,OUTPUT); 
   
-   pinMode(PIN_MA_STEP,OUTPUT); 
+  pinMode(PIN_MA_STEP,OUTPUT); 
   pinMode(PIN_MB_STEP,OUTPUT); 
   pinMode(PIN_MC_STEP,OUTPUT); 
   pinMode(PIN_MD_STEP,OUTPUT); 
