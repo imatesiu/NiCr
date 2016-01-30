@@ -9,6 +9,10 @@ const int stepPin = 54;
 const int dirPin = 55; 
 const int enaPin = 38;
 const int PIN_PSU_POWER = 12;
+const int PIN_WIRE = 10;  // EXTRUDER 1 For RAMPS 1.4
+const int PIN_TEMP = 13;  // ANALOG NUMBERING
+int wire_temp = 0;
+const int LED_PIN= 13;
  
 void setup() {
   // Sets the two pins as Outputs
@@ -16,8 +20,16 @@ void setup() {
   pinMode(dirPin,OUTPUT);
   pinMode(enaPin,OUTPUT);
   pinMode(PIN_PSU_POWER, OUTPUT ); 
+   pinMode(PIN_WIRE , OUTPUT);
+  pinMode(LED_PIN  , OUTPUT);
 }
 void loop() {
+
+if (millis() %1000 <500) 
+    digitalWrite(LED_PIN, HIGH);
+  else
+    digitalWrite(LED_PIN, LOW);
+    
   digitalWrite( PIN_PSU_POWER, LOW );
   digitalWrite( enaPin, LOW );
   digitalWrite(dirPin,true); // Enables the motor to move in a particular direction

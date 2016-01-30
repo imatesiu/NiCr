@@ -57,7 +57,6 @@ const int PIN_WIRE = 10;  // EXTRUDER 1 For RAMPS 1.4
 const int PIN_TEMP = 13;  // ANALOG NUMBERING
 int wire_temp = 0;
 
-const int PIN_TEMP_WIRE = 10;  // EXTRUDER 1 For RAMPS 1.4
 
 /*
  * LED
