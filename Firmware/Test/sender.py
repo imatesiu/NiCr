@@ -19,7 +19,10 @@ with open(fname) as f:
 	
 x=0
 for content in contents:
-	command = content[:len(content)-1]
+	if(content>3):
+		command = content[:len(content)-1]
+	else:
+		command = content
 	if len(command)>0:
 		if(command[0:1]=="\\"): continue;
 	x+=1
