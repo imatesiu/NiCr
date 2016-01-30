@@ -54,7 +54,16 @@ const int PIN_PSU_POWER = 12;  //PS_ON_PIN   For RAMPS 1.4
  * WIRE
  */
 const int PIN_WIRE = 10;  // EXTRUDER 1 For RAMPS 1.4
+const int PIN_TEMP = 13;  // ANALOG NUMBERING
 int wire_temp = 0;
+
+const int PIN_TEMP_WIRE = 10;  // EXTRUDER 1 For RAMPS 1.4
+
+/*
+ * LED
+ */
+
+const int LED_PIN     =       13;
 
 /* STEPPER PINOUT
 MA -> Upper stepper side A
@@ -133,11 +142,6 @@ void MoveStepper()
   // workplane B
   MC_steps = bx + by;
   MD_steps = bx - by;
-  // Enable:
-  digitalWrite( PIN_MA_ENB, LOW );
-  digitalWrite( PIN_MB_ENB, LOW );
-  digitalWrite( PIN_MC_ENB, LOW );
-  digitalWrite( PIN_MD_ENB, LOW );
   // rotation direction:
   digitalWrite( PIN_MA_DIR, LOW );
   digitalWrite( PIN_MB_DIR, LOW );
@@ -221,14 +225,19 @@ void PathABCD( int Adx, int Ady, int Bdx, int Bdy )
     {
       stepper_instruction[i] = 0;
     }
-    Serial.println();
+    Serial.print("...");
   }
+  Serial.println("OK");
 }
 
 void setup()
 {
   Serial.begin(115200);
   pinMode(PIN_PSU_POWER, OUTPUT); 
+ 
+  pinMode(PIN_WIRE , OUTPUT);
+
+  pinMode(LED_PIN  , OUTPUT);
   
   pinMode(PIN_MA_ENB,OUTPUT); 
   pinMode(PIN_MB_ENB,OUTPUT); 
@@ -244,13 +253,23 @@ void setup()
   pinMode(PIN_MB_DIR,OUTPUT); 
   pinMode(PIN_MC_DIR,OUTPUT); 
   pinMode(PIN_MD_DIR,OUTPUT); 
+  
+    // Enable:
+  digitalWrite( PIN_MA_ENB, LOW );
+  digitalWrite( PIN_MB_ENB, LOW );
+  digitalWrite( PIN_MC_ENB, LOW );
+  digitalWrite( PIN_MD_ENB, LOW );
 }
 
 String complete_instruction[6];  // contains the decoded instruction
 bool INIT = false;
 void loop()
 { 
-  while(!Serial.available()) {}  // if there is nothing on serial, do nothing
+  if (millis() %1000 <500) 
+    digitalWrite(LED_PIN, HIGH);
+  else
+    digitalWrite(LED_PIN, LOW);
+  while(!Serial.available()) { }  // if there is nothing on serial, do nothing
   int  i = 0;
   char raw_instruction[25];
   if(Serial.available())
@@ -292,7 +311,6 @@ void loop()
     }
     if( INIT == true )
     {
-      Serial.println( complete_instruction[0] );
       if( complete_instruction[0] == "POWER" )
       {
         if( complete_instruction[1] == "ON" )
@@ -309,6 +327,11 @@ void loop()
       if( complete_instruction[0] == "WIRE" )
       {
         wire_temp = complete_instruction[1].toInt();
+        if(wire_temp>0){
+         digitalWrite(PIN_WIRE, HIGH);
+        }else{
+         digitalWrite(PIN_WIRE, LOW);
+        }
         Serial.print( "Wire temperature set to: " );
         Serial.println( wire_temp );
         Serial.println( "DONE" );
@@ -320,6 +343,7 @@ void loop()
         int stepsMC = round( complete_instruction[3].toFloat()*scaleMC );
         int stepsMD = round( complete_instruction[4].toFloat()*scaleMD );
         PathABCD( stepsMA, stepsMB, stepsMC, stepsMD );
+         Serial.println( String(stepsMA)+"_"+String(stepsMB)+"_"+String(stepsMC)+"_"+String(stepsMD) );
         Serial.println( "DONE" );
       }
       if( complete_instruction[0] == "END" )
@@ -334,4 +358,25 @@ void loop()
       complete_instruction[i] = "";
     }
   }
+
+  int temp = read_temp();
+  Serial.println( "TEMP:" +String(temp));
+  }
+
+int read_temp()
+{
+   int current_celsius = 0;
+  if(PIN_TEMP>0){
+    int rawtemp = analogRead(PIN_TEMP);
+    Serial.println( "RAW:" +String(rawtemp));
+    double Temp;
+    Temp = log(10000.0*((1024.0/rawtemp-1))); 
+    Temp = 1 / (0.001129148 + (0.000234125 + (0.0000000876741 * Temp * Temp ))* Temp );
+    Temp = Temp - 273.15;          
+    current_celsius = (int)Temp;
+  
+  }
+   return current_celsius;
 }
+
+
