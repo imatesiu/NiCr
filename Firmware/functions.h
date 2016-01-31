@@ -43,7 +43,7 @@ int read_temp()
    return current_celsius;
 }
 
-void temp(int wire_temp){
+void set_temp(int wire_temp){
   if(wire_temp>0){
          digitalWrite(PIN_WIRE, HIGH);
         }else{

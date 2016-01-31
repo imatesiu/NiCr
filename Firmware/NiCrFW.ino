@@ -288,7 +288,7 @@ void loop()
         Serial.println( wire_temp );
         Serial.println( "DONE" );
         */
-        temp(wire_temp);
+        set_temp(wire_temp);
         Serial.println( 0 );
       }
       if( complete_instruction[0] == "MOVE" )
