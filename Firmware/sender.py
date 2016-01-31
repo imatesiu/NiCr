@@ -35,7 +35,6 @@ for content in contents:
 		while str(reply)!='0\r\n':
 			reply = ser.readline()
 			print reply
-			print len(reply)
 			sleep(.1)
 			if x==8:
 				break
