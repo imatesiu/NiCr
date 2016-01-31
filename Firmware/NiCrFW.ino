@@ -36,7 +36,8 @@ TO COMPLETITION
 -WIRE TEMPERATURE SET BY LCD POTENTIOMETER
 -INSTRUCTION FEED FROM SD CARD
 ------------------------------------------------------------------------------*/
-
+#include "pin.h"
+#include "functions.h"
 
 // STEPPER MOTOR SCALE
 const float scaleMA = 2.0; // (steps/mm)
@@ -45,41 +46,41 @@ const float scaleMC = 2.0; // (steps/mm)
 const float scaleMD = 2.0; // (steps/mm)
 
 // PINOUT --------------------------------------------------------------- PINOUT
-/* POWER SOURCE PINOUT
-PC PSU triggered to ON when pin goes LOW
-*/
-const int PIN_PSU_POWER = 0;
 
-/*
- * WIRE
- */
-const int PIN_WIRE = 0;
-int wire_temp = 0;
 
-/* STEPPER PINOUT
-MA -> Upper stepper side A
-MB -> Lower stepper side A
-*/
-const int PIN_MA_STEP = 0;
-const int PIN_MB_STEP = 0;
-const int PIN_MC_STEP = 0;
-const int PIN_MD_STEP = 0;
-const int PIN_MA_DIR = 0;
-const int PIN_MB_DIR = 0;
-const int PIN_MC_DIR = 0;
-const int PIN_MD_DIR = 0;
 
-/* LIMIT SWITCH PINOUT
-m/M -> min/max
-A/B -> side A or B*/
-const int PIN_LSW_MXA = 0;
-const int PIN_LSW_MYA = 0;
-const int PIN_LSW_mXA = 0;
-const int PIN_LSW_mYA = 0;
-const int PIN_LSW_MXB = 0;
-const int PIN_LSW_MYB = 0;
-const int PIN_LSW_mXB = 0;
-const int PIN_LSW_mYB = 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // PINOUT END ------------------------------------------------------- PINOUT END
 
@@ -205,22 +206,27 @@ void PathABCD( int Adx, int Ady, int Bdx, int Bdy )
     {
       stepper_instruction[i] = 0;
     }
-    // Serial.println();
-  }
+     Serial.print("..");
+  } Serial.println("OK");
 }
 
 void setup()
 {
   Serial.begin(115200);
+  ramps_setup();
 }
 
 String complete_instruction[6];  // contains the decoded instruction
 bool INIT = false;
 void loop()
 {
+  if (millis() %1000 <500) 
+    digitalWrite(LED_PIN, HIGH);
+  else
+    digitalWrite(LED_PIN, LOW);
   while(!Serial.available()) {}  // if there is nothing on serial, do nothing
   int  i = 0;
-  char raw_instruction[25];
+  char raw_instruction[37];
   if(Serial.available())
   {  // if something comes from serial, read it and store it in raw_instruction char array
     delay(10); // delay to allow buffer to fill
@@ -233,12 +239,12 @@ void loop()
   if( strlen( raw_instruction ) > 0 )  // if a new raw_instruction has been read
   {
     // clean raw_instruction before decoding (overwrite non filled array positions with empty spaces)
-    for( int n = i; n < 25; n++ ) { raw_instruction[n] = ' '; }
+    for( int n = i; n < 37; n++ ) { raw_instruction[n] = ' '; }
     // decode the instruction (4 fields) (iterator n = field, iterator j = character)
     int j = 0;
     for( int n = 0; n < 5; n++ )
     {
-      while( j < 25 )
+      while( j < 37 )
       {
         if( raw_instruction[j] == ' ' )
         {
@@ -290,6 +296,7 @@ void loop()
         int stepsMB = round( complete_instruction[2].toFloat()*scaleMB );
         int stepsMC = round( complete_instruction[3].toFloat()*scaleMC );
         int stepsMD = round( complete_instruction[4].toFloat()*scaleMD );
+          Serial.println( String(stepsMA)+"_"+String(stepsMB)+"_"+String(stepsMC)+"_"+String(stepsMD) );
         PathABCD( stepsMA, stepsMB, stepsMC, stepsMD );
         Serial.println( 0 );
       }
@@ -305,4 +312,9 @@ void loop()
       complete_instruction[i] = "";
     }
   }
+  int temp = read_temp();
+  Serial.println( "TEMP:" +String(temp));
 }
+
+
+
