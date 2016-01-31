@@ -282,12 +282,13 @@ void loop()
       if( complete_instruction[0] == "WIRE" )
       {
         wire_temp = complete_instruction[1].toInt();
-        analogWrite( PIN_WIRE, wire_temp );
-        /*
+        /*analogWrite( PIN_WIRE, wire_temp );
+        
         Serial.print( "Wire temperature set to: " );
         Serial.println( wire_temp );
         Serial.println( "DONE" );
         */
+        temp(wire_temp);
         Serial.println( 0 );
       }
       if( complete_instruction[0] == "MOVE" )

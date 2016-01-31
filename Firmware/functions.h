@@ -42,3 +42,15 @@ int read_temp()
   }
    return current_celsius;
 }
+
+void temp(int wire_temp){
+  if(wire_temp>0){
+         digitalWrite(PIN_WIRE, HIGH);
+        }else{
+         digitalWrite(PIN_WIRE, LOW);
+        }
+        Serial.print( "Wire temperature set to: " );
+        Serial.println( wire_temp );
+
+}
+
