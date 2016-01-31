@@ -34,7 +34,10 @@ for content in contents:
 	if str(reply)!='0\r\n':
 		while str(reply)!='0\r\n':
 			reply = ser.readline()
-			print reply
+			if str(reply)=='0\r\n': 
+				print 'DONE'
+			else:
+				print reply
 			sleep(.1)
 			if x==8:
 				break
