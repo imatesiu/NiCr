@@ -10,7 +10,7 @@ while y>0:
 	try:
 		from serial import *
 		import serial
-	
+		y=-1
 		if len(sys.argv)>2:
 			port = sys.argv[2]
 		else:
